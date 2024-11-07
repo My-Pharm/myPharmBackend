@@ -2,9 +2,11 @@ package myPharm.myPharm.service;
 
 import myPharm.myPharm.domain.entity.IngredientEntity;
 import myPharm.myPharm.domain.entity.MedboxEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class InterationCheckServiceImpl implements InteractionCheckSercive{
     public List<String[]> checkInteraction(List<MedboxEntity> medboxEntities){
 //        Set<String> medIngredient = new HashSet<>();
