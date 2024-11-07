@@ -1,4 +1,4 @@
-package myPharm.myPharm.domain.repository;
+package myPharm.myPharm.repository;
 
 import myPharm.myPharm.domain.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

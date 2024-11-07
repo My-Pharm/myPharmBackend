@@ -2,7 +2,7 @@ package myPharm.myPharm.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import myPharm.myPharm.domain.dto.MedboxReqDto;
+import myPharm.myPharm.domain.dto.medbox.MedboxReqDto;
 import myPharm.myPharm.domain.entity.MedicineEntity;
 import myPharm.myPharm.service.MedboxService;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("/medbox")
 public class MedboxController {
     private final MedboxService medboxService;
-
 
     @PostMapping("/save-my-pharm")//#1
     public String saveMyPharm(@RequestBody MedboxReqDto medboxReqDto){

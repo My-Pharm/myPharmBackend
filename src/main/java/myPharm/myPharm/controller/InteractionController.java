@@ -1,8 +1,6 @@
 package myPharm.myPharm.controller;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import myPharm.myPharm.domain.dto.MedboxReqDto;
 import myPharm.myPharm.domain.entity.AlertEntity;
 import myPharm.myPharm.domain.entity.MedicineEntity;
 import org.springframework.web.bind.annotation.*;

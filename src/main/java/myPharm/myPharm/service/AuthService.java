@@ -6,9 +6,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import myPharm.myPharm.domain.dto.user.AuthLoginRes;
+import myPharm.myPharm.domain.dto.user.AuthLoginResDto;
 import myPharm.myPharm.domain.entity.UserEntity;
-import myPharm.myPharm.domain.repository.UserRepository;
+import myPharm.myPharm.repository.UserRepository;
 import myPharm.myPharm.global.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -34,7 +34,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthLoginRes login(String code) throws IOException {
+    public AuthLoginResDto login(String code) throws IOException {
         String kakaoAccessToken = getKakaoAccessToken(code);
         JsonElement element = getJsonElementByAccessToken(kakaoAccessToken);
 
@@ -59,17 +59,17 @@ public class AuthService {
         user.setRefreshToken(refreshToken);
         userRepository.save(user);
 
-        return new AuthLoginRes(accessToken, refreshToken);
+        return new AuthLoginResDto(accessToken, refreshToken);
     }
 
 
-    public ResponseEntity<AuthLoginRes> refreshToken(Authentication authentication) {
+    public ResponseEntity<AuthLoginResDto> refreshToken(Authentication authentication) {
         UserEntity user = userRepository.findByOuthId(Long.valueOf(authentication.getName()));
         if(user == null)
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         String accessToken = jwtTokenProvider.createAccessToken(user.getOuthId());
-        return new ResponseEntity<>(new AuthLoginRes(accessToken, user.getRefreshToken()), HttpStatus.OK);
+        return new ResponseEntity<>(new AuthLoginResDto(accessToken, user.getRefreshToken()), HttpStatus.OK);
     }
 
     public ResponseEntity<HttpStatus> logout(Authentication authentication){
@@ -87,7 +87,7 @@ public class AuthService {
         return userRepository.findByOuthId(Long.valueOf(authentication.getName()));
     }
 
-    private AuthLoginRes register(Long outhId, String username, String birthday, String ageRange, String gender) {
+    private AuthLoginResDto register(Long outhId, String username, String birthday, String ageRange, String gender) {
         String accessToken = jwtTokenProvider.createAccessToken(outhId);
         String refreshToken = jwtTokenProvider.createRefreshToken(outhId);
 
@@ -102,7 +102,7 @@ public class AuthService {
 
         userRepository.save(user);
 
-        return new AuthLoginRes(accessToken, refreshToken);
+        return new AuthLoginResDto(accessToken, refreshToken);
     }
 
 

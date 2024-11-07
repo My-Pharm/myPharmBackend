@@ -2,7 +2,7 @@ package myPharm.myPharm.service;
 
 import myPharm.myPharm.domain.entity.CustomUserDetails;
 import myPharm.myPharm.domain.entity.UserEntity;
-import myPharm.myPharm.domain.repository.UserRepository;
+import myPharm.myPharm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

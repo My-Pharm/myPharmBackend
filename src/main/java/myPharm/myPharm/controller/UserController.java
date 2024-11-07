@@ -1,7 +1,7 @@
 package myPharm.myPharm.controller;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import myPharm.myPharm.domain.dto.user.AuthLoginRes;
+import myPharm.myPharm.domain.dto.user.AuthLoginResDto;
 import myPharm.myPharm.domain.entity.UserEntity;
 import myPharm.myPharm.service.AuthService;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/login/auth")
     public void login(@RequestParam String code, HttpServletResponse response) throws IOException {
-        AuthLoginRes authLoginRes = authService.login(code);
+        AuthLoginResDto authLoginRes = authService.login(code);
         if (authLoginRes != null) {
             String redirectUrl = "http://localhost:8080/login/success?accessToken=" + authLoginRes.getAccessToken() + "&refreshToken=" + authLoginRes.getRefreshToken();
             response.sendRedirect(redirectUrl);
@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PatchMapping("/login/auth")
-    public ResponseEntity<AuthLoginRes> refreshToken(Authentication authentication) {
+    public ResponseEntity<AuthLoginResDto> refreshToken(Authentication authentication) {
         return authService.refreshToken(authentication);
     }
 
