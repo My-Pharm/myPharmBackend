@@ -21,7 +21,12 @@ public class UserEntity {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "user_name")
+    private String userName;
+
     private String gender;
+
+    private String age;
 
     private String birth;
 
