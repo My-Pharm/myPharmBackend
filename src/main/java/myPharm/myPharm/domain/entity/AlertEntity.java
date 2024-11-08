@@ -21,7 +21,7 @@ public class AlertEntity {
     @JoinColumn(name = "ingredient_name")
     private IngredientEntity ingredient;
 
-    @Column(name = "type_name")
+    @Column(name = "type_name",length = 1000)
     private String typeName;
 
     private String content;

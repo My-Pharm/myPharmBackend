@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/medbox")
 public class MedboxController {
 
     private final MedboxService medboxService;
