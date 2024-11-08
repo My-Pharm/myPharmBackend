@@ -1,6 +1,7 @@
 package myPharm.myPharm.controller;
 
 import lombok.RequiredArgsConstructor;
+import myPharm.myPharm.domain.dto.alert.AlertResDto;
 import myPharm.myPharm.domain.dto.ingredient.IngredientResDto;
 import myPharm.myPharm.domain.dto.medicine.MedicineReqDto;
 import myPharm.myPharm.service.DataService;
@@ -22,6 +23,12 @@ public class DataController {
     @GetMapping("/medicine/search")
     public IngredientResDto searchMedicine(@RequestParam String medicineName) {
         return dataService.searchingredient(medicineName);
+    }
+
+    // 성분이름으로 유의사항 불러오기
+    @GetMapping("/alert/search")
+    public AlertResDto searchalert(@RequestParam String ingredientName) {
+        return dataService.searchAlert(ingredientName);
     }
 
 }
