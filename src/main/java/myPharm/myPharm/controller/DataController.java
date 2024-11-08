@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import myPharm.myPharm.domain.dto.alert.AlertResDto;
 import myPharm.myPharm.domain.dto.ingredient.IngredientResDto;
 import myPharm.myPharm.domain.dto.medicine.MedicineReqDto;
+import myPharm.myPharm.domain.dto.prohibit.ProhibitResDto;
 import myPharm.myPharm.service.DataService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,12 @@ public class DataController {
     @GetMapping("/alert/search")
     public AlertResDto searchalert(@RequestParam String ingredientName) {
         return dataService.searchAlert(ingredientName);
+    }
+
+    //성분이름으로 같이 먹으면안되는 성분이름 가져오기
+    @GetMapping("/prohibit/search")
+    public ProhibitResDto searchprohibit(@RequestParam String ingredientName) {
+        return dataService.searchprohibit(ingredientName);
     }
 
 }
