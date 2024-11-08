@@ -3,22 +3,19 @@ package myPharm.myPharm.service;
 import lombok.RequiredArgsConstructor;
 import myPharm.myPharm.domain.dto.alert.AlertResDto;
 import myPharm.myPharm.domain.dto.ingredient.IngredientResDto;
-import myPharm.myPharm.domain.dto.prohibit.ProhibitResDto;
-
 import myPharm.myPharm.domain.entity.AlertEntity;
 import myPharm.myPharm.domain.entity.IngredientEntity;
-import myPharm.myPharm.domain.entity.MedicineEntity;
 import myPharm.myPharm.domain.entity.ProhibitEntity;
 import myPharm.myPharm.repository.AlertRepository;
-import myPharm.myPharm.repository.MedicineRepository;
 import myPharm.myPharm.repository.ProhibitRepository;
 import myPharm.myPharm.repository.RelationRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 @Service
 @RequiredArgsConstructor
@@ -45,22 +42,22 @@ public class DataService {
         return new AlertResDto(contents);
     }
 
-    public ProhibitResDto searchprohibit(String ingredientName) {
+    public AlertResDto searchprohibit(String ingredientName) {
+
         List<ProhibitEntity> prohibitedEntities = prohibitRepository.findByIngredient1_IngredientNameOrIngredient2_IngredientName(ingredientName, ingredientName);
 
-        List<String> prohibitedIngredientNames = prohibitedEntities.stream()
-                .flatMap(entity -> {
-                    if (entity.getIngredient1().getIngredientName().equals(ingredientName)) {
-                        return Stream.of(entity.getIngredient2().getIngredientName());
-                    } else {
-                        return Stream.of(entity.getIngredient1().getIngredientName());
-                    }
-                })
-                .collect(Collectors.toList());
+        Set<String> prohibitedIngredientNames = new HashSet<>();
 
-        return new ProhibitResDto(prohibitedIngredientNames);
+        for (ProhibitEntity entity : prohibitedEntities) {
+            if (entity.getIngredient1().getIngredientName().equals(ingredientName)) {
+                prohibitedIngredientNames.add(entity.getIngredient2().getIngredientName());
+            } else {
+                prohibitedIngredientNames.add(entity.getIngredient1().getIngredientName());
+            }
+        }
+
+        return new AlertResDto(new ArrayList<>(prohibitedIngredientNames));
     }
-
 
 }
 
