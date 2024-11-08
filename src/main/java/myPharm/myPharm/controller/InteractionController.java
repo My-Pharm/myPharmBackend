@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import myPharm.myPharm.domain.entity.AlertEntity;
 import myPharm.myPharm.domain.entity.MedboxEntity;
 import myPharm.myPharm.domain.entity.MedicineEntity;
+import myPharm.myPharm.domain.entity.UserEntity;
 import myPharm.myPharm.repository.MedboxRepository;
 import myPharm.myPharm.repository.MedicineRepository;
+import myPharm.myPharm.repository.UserRepository;
 import myPharm.myPharm.service.InterationCheckServiceImpl;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,30 +21,37 @@ import java.util.List;
 public class InteractionController {
 
     private final MedboxRepository medboxRepository;
+    private final UserRepository userRepository;
     private final InterationCheckServiceImpl interationCheckService;
+
     @GetMapping("/check-all")//#4
-    public List<String[]> checkAll(){
+    public List<String[]> checkAll(Authentication authentication){
 
-        List<MedboxEntity> list2 = medboxRepository.findAll();
-        List<String[]> list = interationCheckService.checkInteraction(list2);
+        Long outhId = Long.valueOf(authentication.getName());
+        UserEntity user = userRepository.findByOuthId(outhId);
 
-        return list;
+        List<MedboxEntity> myMedBoxList = medboxRepository.findByUser(user);
+        List<String[]> alertList = interationCheckService.checkInteraction(myMedBoxList);
+
+
+        return alertList;
     }
 
     @GetMapping("/check-once")//#6
-    public List<String[]> checkOnce(List<MedboxEntity> addlist){
+    public List<String[]> checkOnce(List<MedboxEntity> addlist,Authentication authentication){
 
+        Long outhId = Long.valueOf(authentication.getName());
+        UserEntity user = userRepository.findByOuthId(outhId);
 
         //dto가져옴
-        List<MedboxEntity> list2 = medboxRepository.findAll();
+        List<MedboxEntity> myMedBoxList = medboxRepository.findByUser(user);
 
-        for(MedboxEntity med: addlist){
-            list2.add(med);
-        }
-        List<String[]> list = interationCheckService.checkInteraction(list2);
+        myMedBoxList.addAll(addlist);
+
+        List<String[]> alertList = interationCheckService.checkInteraction(myMedBoxList);
 
 
-        return list;
+        return alertList;
     }
 
 }
