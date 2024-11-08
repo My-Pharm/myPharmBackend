@@ -51,7 +51,7 @@ public class InterationCheckServiceImpl implements InteractionCheckSercive{
         for(String key:medIngre.keySet()){
             for(String key2: prohibitRelation.keySet()){
                 if(key.contains(key2)){
-                    alertList.add(new String[]{medIngre.get(prohibitRelation.get(key2)), medIngre.get(key)});
+                    alertList.add(new String[]{"병용금지",medIngre.get(prohibitRelation.get(key2)), medIngre.get(key)});
                 }
             }
 //            if(prohibitRelation.containsKey(key)){//prohibit이작고 성분이 크다
