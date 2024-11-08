@@ -3,6 +3,7 @@ package myPharm.myPharm.service;
 import lombok.RequiredArgsConstructor;
 import myPharm.myPharm.domain.dto.alert.AlertResDto;
 import myPharm.myPharm.domain.dto.ingredient.IngredientResDto;
+import myPharm.myPharm.domain.dto.prohibit.ProhibitResDto;
 import myPharm.myPharm.domain.entity.AlertEntity;
 import myPharm.myPharm.domain.entity.IngredientEntity;
 import myPharm.myPharm.domain.entity.ProhibitEntity;
@@ -42,7 +43,7 @@ public class DataService {
         return new AlertResDto(contents);
     }
 
-    public AlertResDto searchprohibit(String ingredientName) {
+    public ProhibitResDto searchprohibit(String ingredientName) {
 
         List<ProhibitEntity> prohibitedEntities = prohibitRepository.findByIngredient1_IngredientNameOrIngredient2_IngredientName(ingredientName, ingredientName);
 
@@ -56,7 +57,7 @@ public class DataService {
             }
         }
 
-        return new AlertResDto(new ArrayList<>(prohibitedIngredientNames));
+        return new ProhibitResDto(new ArrayList<>(prohibitedIngredientNames));
     }
 
 }

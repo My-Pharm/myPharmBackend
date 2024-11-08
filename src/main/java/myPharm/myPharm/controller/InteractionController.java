@@ -28,11 +28,13 @@ public class InteractionController {
     public List<String[]> checkAll(Authentication authentication){
 
         Long outhId = Long.valueOf(authentication.getName());
+        System.out.println(outhId);
         UserEntity user = userRepository.findByOuthId(outhId);
-
+        System.out.println(user);
         List<MedboxEntity> myMedBoxList = medboxRepository.findByUser(user);
+        System.out.println(myMedBoxList);
         List<String[]> alertList = interationCheckService.checkInteraction(myMedBoxList);
-
+        System.out.println(alertList);
 
         return alertList;
     }

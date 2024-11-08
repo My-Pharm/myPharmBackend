@@ -20,6 +20,7 @@ public class UserController {
     @GetMapping("/login/auth")
     public void login(@RequestParam String code, HttpServletResponse response) throws IOException {
         AuthLoginResDto authLoginRes = authService.login(code);
+        System.out.println(authLoginRes);
         if (authLoginRes != null) {
             String redirectUrl = "http://localhost:8080/login/success?accessToken=" + authLoginRes.getAccessToken() + "&refreshToken=" + authLoginRes.getRefreshToken();
             response.sendRedirect(redirectUrl);

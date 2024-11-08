@@ -34,7 +34,7 @@ public class DataController {
 
     //성분이름으로 같이 먹으면안되는 성분이름가져오기
     @GetMapping("/prohibit/search")
-    public AlertResDto searchprohibit(@RequestParam String ingredientName) {
+    public ProhibitResDto searchprohibit(@RequestParam String ingredientName) {
         return dataService.searchprohibit(ingredientName);
     }
 

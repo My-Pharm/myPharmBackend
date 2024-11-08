@@ -25,6 +25,10 @@ public class MedboxController {
     //약이름, 시작날짜, 끝날짜 받아서 저장
     @PostMapping("/medbox/save") //#1
     public void saveMedbox(@RequestBody MedboxReqDto medboxReqDto, Authentication authentication) {
+        if (authentication == null) {
+            throw new RuntimeException("Authentication is null");
+        }
+        System.out.println("Authentication name: " + authentication.getName());
         medboxService.saveMedbox(medboxReqDto, authentication);
     }
 
