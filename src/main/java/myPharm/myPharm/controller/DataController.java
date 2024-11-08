@@ -1,0 +1,27 @@
+package myPharm.myPharm.controller;
+
+import lombok.RequiredArgsConstructor;
+import myPharm.myPharm.domain.dto.ingredient.IngredientResDto;
+import myPharm.myPharm.domain.dto.medicine.MedicineReqDto;
+import myPharm.myPharm.service.DataService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/data")
+public class DataController {
+
+    private final DataService dataService;
+
+    // 약 이름으로 성분 검색
+    @GetMapping("/medicine/search")
+    public IngredientResDto searchMedicine(@RequestParam String medicineName) {
+        return dataService.searchingredient(medicineName);
+    }
+
+}
