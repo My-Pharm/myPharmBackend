@@ -64,7 +64,7 @@ public class MedboxService {
 
     //medbox에서 내가 지금 복용중인 약 불러오기
     @Transactional(readOnly = true)
-    public List<String> getMedbox(Authentication authentication) throws ParseException {
+    public List<MedboxResDto> getMedbox(Authentication authentication) throws ParseException {
         Long outhId = Long.valueOf(authentication.getName());
         UserEntity user = userRepository.findByOuthId(outhId);
         List<MedboxEntity> medboxEntities = medboxRepository.findByUser(user);
@@ -78,7 +78,7 @@ public class MedboxService {
 
         return medboxEntities.stream()
                 .filter(medbox -> medbox.getEndDate().after(curDate) || medbox.getEndDate().equals(curDate))
-                .map(medbox -> medbox.getMedicine().getMedicineName())
+                .map(medbox -> new MedboxResDto(medbox.getStartDate(), medbox.getEndDate(), medbox.getMedicine().getMedicineName()))
                 .collect(Collectors.toList());
     }
 

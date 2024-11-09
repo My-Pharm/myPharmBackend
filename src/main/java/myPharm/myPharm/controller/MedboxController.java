@@ -41,7 +41,7 @@ public class MedboxController {
 
     //내가 복용중인약  medbox에서 불러오기
     @GetMapping("/medbox/get") //#5
-    public List<String> loadMedbox(Authentication authentication) throws ParseException {
+    public List<MedboxResDto> loadMedbox(Authentication authentication) throws ParseException {
         return medboxService.getMedbox(authentication);
     }
 
