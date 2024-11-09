@@ -69,15 +69,21 @@ public class MedboxService {
         UserEntity user = userRepository.findByOuthId(outhId);
         List<MedboxEntity> medboxEntities = medboxRepository.findByUser(user);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
         String formattedDate = sdf.format(new Date());
 
-        // 한국 시간으로 변환된 Date 객체
+        // 한국 시간으로 변환된 Date 객체 (시간 제외)
         Date curDate = sdf.parse(formattedDate);
 
         return medboxEntities.stream()
-                .filter(medbox -> medbox.getEndDate().after(curDate) || medbox.getEndDate().equals(curDate))
+                .filter(medbox -> {
+                    SimpleDateFormat dateOnlyFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    dateOnlyFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+                    String endDateStr = dateOnlyFormat.format(medbox.getEndDate());
+                    String curDateStr = dateOnlyFormat.format(curDate);
+                    return endDateStr.equals(curDateStr) || medbox.getEndDate().after(curDate);
+                })
                 .map(medbox -> new MedboxResDto(medbox.getStartDate(), medbox.getEndDate(), medbox.getMedicine().getMedicineName()))
                 .collect(Collectors.toList());
     }

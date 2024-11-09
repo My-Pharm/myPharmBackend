@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,14 +24,22 @@ public class AlertCheckServiceImpl {
     private final RelationRepository relationRepository;
     public List<AlertResDto> alertCheck(List<MedboxEntity> medboxEntities) throws ParseException {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
         String formattedDate = sdf.format(new Date());
 
-        // 한국 시간으로 변환된 Date 객체
-        Date curDate = sdf.parse(formattedDate);
+        // 한국 시간으로 변환된 날짜 문자열을 LocalDate로 변환
+        LocalDate curDate = sdf.parse(formattedDate).toInstant()
+                .atZone(ZoneId.of("Asia/Seoul"))
+                .toLocalDate();
+
         medboxEntities = medboxEntities.stream()
-                .filter(medbox -> medbox.getEndDate().after(curDate) || medbox.getEndDate().equals(curDate))
+                .filter(medbox -> {
+                    LocalDate endDate = medbox.getEndDate().toInstant()
+                            .atZone(ZoneId.of("Asia/Seoul"))
+                            .toLocalDate();
+                    return endDate.isEqual(curDate) || endDate.isAfter(curDate);
+                })
                 .collect(Collectors.toList());
 
         //List<String[]> alertList = new ArrayList<>();//리턴값
