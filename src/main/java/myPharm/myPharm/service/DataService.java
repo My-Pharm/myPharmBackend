@@ -32,16 +32,12 @@ public class DataService {
         return new IngredientResDto(ingredients);
     }
 
-    public AlertResDto searchAlert(String ingredientName) {
-
-        List<AlertEntity> alertEntities = alertRepository.findByIngredientName(ingredientName);
-
-        List<String> contents = alertEntities.stream()
-                .map(AlertEntity::getContent)
-                .collect(Collectors.toList());
-
-        return new AlertResDto(contents);
-    }
+//    public AlertResDto searchAlert(String ingredientName) {
+//
+//        List<AlertEntity> alertEntities = alertRepository.findByIngredientName(ingredientName);
+//
+//        return new AlertResDto(alertEntities);
+//    }
 
     public ProhibitResDto searchprohibit(String ingredientName) {
 

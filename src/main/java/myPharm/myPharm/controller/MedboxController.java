@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -40,7 +41,7 @@ public class MedboxController {
 
     //내가 복용중인약  medbox에서 불러오기
     @GetMapping("/medbox/get") //#5
-    public List<String> loadMedbox(Authentication authentication) {
+    public List<MedboxResDto> loadMedbox(Authentication authentication) throws ParseException {
         return medboxService.getMedbox(authentication);
     }
 

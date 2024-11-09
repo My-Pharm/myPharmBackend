@@ -27,10 +27,10 @@ public class DataController {
     }
 
     // 성분이름으로 유의사항 불러오기
-    @GetMapping("/alert/search")
-    public AlertResDto searchalert(@RequestParam String ingredientName) {
-        return dataService.searchAlert(ingredientName);
-    }
+//    @GetMapping("/alert/search")
+//    public AlertResDto searchalert(@RequestParam String ingredientName) {
+//        return dataService.searchAlert(ingredientName);
+//    }
 
     //성분이름으로 같이 먹으면안되는 성분이름가져오기
     @GetMapping("/prohibit/search")

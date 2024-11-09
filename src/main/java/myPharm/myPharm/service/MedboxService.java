@@ -16,7 +16,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,13 +64,27 @@ public class MedboxService {
 
     //medbox에서 내가 지금 복용중인 약 불러오기
     @Transactional(readOnly = true)
-    public List<String> getMedbox(Authentication authentication) {
+    public List<MedboxResDto> getMedbox(Authentication authentication) throws ParseException {
         Long outhId = Long.valueOf(authentication.getName());
         UserEntity user = userRepository.findByOuthId(outhId);
         List<MedboxEntity> medboxEntities = medboxRepository.findByUser(user);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+        String formattedDate = sdf.format(new Date());
+
+        // 한국 시간으로 변환된 Date 객체 (시간 제외)
+        Date curDate = sdf.parse(formattedDate);
+
         return medboxEntities.stream()
-                .map(medbox -> medbox.getMedicine().getMedicineName())
+                .filter(medbox -> {
+                    SimpleDateFormat dateOnlyFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    dateOnlyFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+                    String endDateStr = dateOnlyFormat.format(medbox.getEndDate());
+                    String curDateStr = dateOnlyFormat.format(curDate);
+                    return endDateStr.equals(curDateStr) || medbox.getEndDate().after(curDate);
+                })
+                .map(medbox -> new MedboxResDto(medbox.getStartDate(), medbox.getEndDate(), medbox.getMedicine().getMedicineName()))
                 .collect(Collectors.toList());
     }
 
