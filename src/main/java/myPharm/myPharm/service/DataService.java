@@ -36,11 +36,7 @@ public class DataService {
 
         List<AlertEntity> alertEntities = alertRepository.findByIngredientName(ingredientName);
 
-        List<String> contents = alertEntities.stream()
-                .map(AlertEntity::getContent)
-                .collect(Collectors.toList());
-
-        return new AlertResDto(contents);
+        return new AlertResDto(alertEntities);
     }
 
     public ProhibitResDto searchprohibit(String ingredientName) {
