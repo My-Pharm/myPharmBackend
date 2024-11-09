@@ -9,5 +9,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class AlertResDto {
-    private List<AlertEntity> contents;
+
+    private String medicineName;
+    private String typeName;
+    private String contents;
 }
