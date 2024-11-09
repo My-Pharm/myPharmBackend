@@ -1,6 +1,7 @@
-package myPharm.myPharm.global.jwt;
+package myPharm.myPharm.global.config;
 
 import lombok.RequiredArgsConstructor;
+import myPharm.myPharm.global.jwt.JwtFilter;
 import myPharm.myPharm.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
