@@ -43,7 +43,8 @@ public class DataService {
 
         List<ProhibitEntity> prohibitedEntities = prohibitRepository.findByIngredient1_IngredientNameOrIngredient2_IngredientName(ingredientName, ingredientName);
 
-        Set<String> prohibitedIngredientNames = new HashSet<>();
+//        Set<String> prohibitedIngredientNames = new HashSet<>();
+        ArrayList<String> prohibitedIngredientNames = new ArrayList<>();
 
         for (ProhibitEntity entity : prohibitedEntities) {
             if (entity.getIngredient1().getIngredientName().equals(ingredientName)) {
