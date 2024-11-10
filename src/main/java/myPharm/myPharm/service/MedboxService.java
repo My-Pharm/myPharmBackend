@@ -67,6 +67,7 @@ public class MedboxService {
     public List<MedboxResDto> getMedbox(Authentication authentication) throws ParseException {
         Long outhId = Long.valueOf(authentication.getName());
         UserEntity user = userRepository.findByOuthId(outhId);
+        System.out.println(user);
         List<MedboxEntity> medboxEntities = medboxRepository.findByUser(user);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
