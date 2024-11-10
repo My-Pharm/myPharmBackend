@@ -22,8 +22,10 @@ public class UserController {
         AuthLoginResDto authLoginRes = authService.login(code);
         System.out.println(authLoginRes);
         if (authLoginRes != null) {
-            String redirectUrl = "http://localhost:8080/login/success?accessToken=" + authLoginRes.getAccessToken() + "&refreshToken=" + authLoginRes.getRefreshToken();
+            String redirectUrl = "http://localhost:5174/login/success?accessToken=" + authLoginRes.getAccessToken() + "&refreshToken=" + authLoginRes.getRefreshToken();
+            System.out.println(redirectUrl);
             response.sendRedirect(redirectUrl);
+            System.out.println(response);
         } else {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
         }
