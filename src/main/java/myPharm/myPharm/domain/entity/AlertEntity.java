@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import myPharm.myPharm.domain.entity.IngredientEntity;
-import myPharm.myPharm.global.AlertEnum;
 
 @Data
 @Entity
@@ -23,7 +21,8 @@ public class AlertEntity {
     @JoinColumn(name = "ingredient_name")
     private IngredientEntity ingredient;
 
-    private AlertEnum typeName;
+    @Column(name = "type_name",length = 1000)
+    private String typeName;
 
     private String content;
 

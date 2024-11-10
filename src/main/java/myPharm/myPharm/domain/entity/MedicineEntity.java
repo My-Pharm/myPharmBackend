@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class MedicineEntity {
 
     @Id
-    @Column(name="medicine_name")
+    @Column(name="medicine_name", length = 400)
     private String medicineName;
 
 }
