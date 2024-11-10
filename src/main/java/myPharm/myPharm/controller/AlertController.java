@@ -13,6 +13,7 @@ import myPharm.myPharm.repository.UserRepository;
 import myPharm.myPharm.service.AlertCheckServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +39,7 @@ public class AlertController {
 
         return alertList;
     }
-    @GetMapping("/alert-once")
+    @PostMapping("/alert-once")
     public List<AlertResDto> alertListCheckOnce(@RequestBody List<MedboxReqDto> addlist, Authentication authentication) throws ParseException {
 
         Long outhId = Long.valueOf(authentication.getName());

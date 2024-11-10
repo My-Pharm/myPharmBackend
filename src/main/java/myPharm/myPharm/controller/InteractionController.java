@@ -42,7 +42,7 @@ public class InteractionController {
         return alertList;
     }
 
-    @GetMapping("/check-once")//#6
+    @PostMapping("/check-once")//#6
     public List<AlertResDto> checkOnce(@RequestBody List<MedboxReqDto> addlist, Authentication authentication) throws ParseException {
 
         Long outhId = Long.valueOf(authentication.getName());
