@@ -22,7 +22,7 @@ public class UserController {
         AuthLoginResDto authLoginRes = authService.login(code);
         System.out.println(authLoginRes);
         if (authLoginRes != null) {
-            String redirectUrl = "http://localhost:5173/login/success?accessToken=" + authLoginRes.getAccessToken() + "&refreshToken=" + authLoginRes.getRefreshToken();
+            String redirectUrl = "http://51.21.23.40/login/success?accessToken=" + authLoginRes.getAccessToken() + "&refreshToken=" + authLoginRes.getRefreshToken();
             System.out.println(redirectUrl);
             response.sendRedirect(redirectUrl);
             System.out.println(response);
